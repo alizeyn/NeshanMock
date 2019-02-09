@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/startTracking"
+            android:icon="@drawable/ic_fiber_manual_record"
+            android:title="@string/startTracking" />
+        <item
+            android:id="@+id/stopTracking"
+            android:icon="@drawable/ic_stop"
+            android:title="@string/stopTracking" />
+        <item
+            android:id="@+id/loadTrack"
+            android:icon="@drawable/ic_reorder"
+            android:title="@string/loadTrack" />
+        <item
+            android:id="@+id/navigation"
+            android:icon="@drawable/ic_navigation"
+            android:title="@string/navigation" />
+        <item
+            android:id="@+id/customMock"
+            android:icon="@drawable/ic_directions"
+            android:title="@string/customMock" />
+</menu>

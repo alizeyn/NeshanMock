@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Neshan Mock</string>
+    <string name="startTracking">Start</string>
+    <string name="stopTracking">Stop</string>
+    <string name="loadTrack">Load</string>
+    <string name="share">Share</string>
+    <string name="navigation">Navigation</string>
+    <string name="customMock">Custom</string>
+</resources>
