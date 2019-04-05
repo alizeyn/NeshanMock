@@ -1,4 +1,4 @@
-package ir.alizeyn.neshanmock.ui;
+package ir.alizeyn.neshanmock.ui.activity;
 
 import android.location.Location;
 import android.os.Bundle;

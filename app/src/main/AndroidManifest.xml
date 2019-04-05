@@ -13,8 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.CustomMockActivity"></activity>
-        <activity android:name=".ui.MenuActivity">
+        <activity android:name=".ui.activity.MockArchiveActivity"></activity>
+        <activity android:name=".ui.activity.CustomMockActivity" />
+        <activity android:name=".ui.activity.MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -23,11 +24,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.TrackActivity"
+            android:name=".ui.activity.TrackActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

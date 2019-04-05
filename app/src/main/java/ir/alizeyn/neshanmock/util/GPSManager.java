@@ -7,20 +7,27 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
 
 
+import com.google.android.gms.location.LocationAvailability;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 
+import org.neshan.BuildConfig;
 import org.neshan.core.LngLat;
 import org.neshan.ui.MapView;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.core.app.ActivityCompat;
 
 /**
  * manage GPS
@@ -61,7 +68,6 @@ public class GPSManager {
         instance = null;
     }
 
-
     private void onLocationChange(Location location) {
         if (gpsFixedListener != null) {
             point = new LngLat(location.getLongitude(), location.getLatitude());
@@ -82,14 +88,6 @@ public class GPSManager {
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return mLocationRequest;
     }
-
-//    private static LocationRequest createLocationRequest() {
-//        LocationRequest mLocationRequest = LocationRequest.create();
-//        mLocationRequest.setInterval(LOCATION_INTERVAL);
-//        mLocationRequest.setFastestInterval(LOCATION_FASTEST_INTERVAL);
-//        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-//        return mLocationRequest;
-//    }
 
     public synchronized void start() {
         if (!started) {
@@ -194,7 +192,6 @@ public class GPSManager {
         }
 
     }
-
 
     public interface OnGPSFixedListener {
         void onLocationChanged(Location loc, LngLat pos);
