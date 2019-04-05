@@ -202,12 +202,13 @@ public class TrackActivity extends AppCompatActivity {
         MaterialButton saveMock = saveMockView.findViewById(R.id.btnSaveMock);
         MaterialButton cancel = saveMockView.findViewById(R.id.btnCancel);
         TextInputEditText etDesc = saveMockView.findViewById(R.id.etDesc);
-        String desc = etDesc.getText() == null ? "No Description" : etDesc.getText().toString();
-        mock.setDesc(desc);
+
         saveMock.setOnClickListener(v -> {
             tracking = false;
             btnRecordTrack.setVisibility(View.VISIBLE);
             btnStopTrack.setVisibility(View.GONE);
+            String desc = etDesc.getText() == null ? "No Description" : etDesc.getText().toString();
+            mock.setDesc(desc);
             AsyncTask.execute(() ->
                     DatabaseClient.getInstance(this)
                             .getMockDatabase()
@@ -223,7 +224,7 @@ public class TrackActivity extends AppCompatActivity {
 
                 for (MockEntity m :
                         mockEntities) {
-                    Log.i("alizeyn-mock", "lat " + m.getId());
+                    Log.i("alizeyn-mock", "lat " + m.getDesc());
                 }
             });
 

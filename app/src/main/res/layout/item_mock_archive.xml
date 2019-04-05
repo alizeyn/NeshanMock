@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvMockItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_more"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_more_vert"
+            android:tint="@android:color/darker_gray" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+
+            <TableRow android:layout_marginTop="4dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_map" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:padding="4dp"
+                    android:text="Type : "
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/tvType"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:padding="4dp"
+                    android:text="..."
+                    android:textColor="@android:color/black" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="4dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_date_range" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:padding="4dp"
+                    android:text="Date : "
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:padding="4dp"
+                    android:text="..."
+                    android:textColor="@android:color/black" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="4dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_description" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:padding="4dp"
+                    android:text="Descritpion: "
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/tvDesc"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:padding="4dp"
+                    android:text="..."
+                    android:textColor="@android:color/black" />
+            </TableRow>
+
+        </TableLayout>
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
