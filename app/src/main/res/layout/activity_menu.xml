@@ -21,9 +21,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:alpha="0.9"
             android:background="@android:color/black"
+            android:alpha="0.7"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -32,7 +36,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="N e s h a n   M o c k"
+                android:text="@string/main_menu_title"
                 android:textColor="@android:color/white"
                 android:textSize="32sp" />
 
@@ -60,15 +64,6 @@
                     android:text="Custom Mock"
                     app:backgroundTint="@color/neshanGreen"
                     app:icon="@drawable/ic_directions" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:minWidth="200dp"
-                    android:text="Play Mock"
-                    app:backgroundTint="@color/neshanGreen"
-                    app:icon="@drawable/ic_play_arrow" />
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"

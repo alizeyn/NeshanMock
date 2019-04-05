@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "ir.alizeyn.neshanmock"
-        minSdkVersion 25
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -20,7 +20,7 @@ android {
         abi {
             enable true
             reset()
-            include 'x86'
+            include 'x86, armeabi-v7a'
             universalApk false
         }
     }
