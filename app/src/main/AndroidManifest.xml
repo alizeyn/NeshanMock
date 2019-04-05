@@ -13,14 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-
-        <activity
-            android:name=".ui.TrackActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".ui.MainActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".ui.CustomMockActivity"></activity>
+        <activity android:name=".ui.MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -28,7 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".ui.TrackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
