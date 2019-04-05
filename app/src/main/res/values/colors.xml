@@ -5,4 +5,9 @@
     <color name="colorAccent">#009688</color>
 
     <color name="neshanGreen">#045d56</color>
+    <color name="neshanGray">#f1f3f5</color>
+
+
+    <color name="gpsActiveStatus">#8DE477</color>
+    <color name="gpsDeactivateStatus">#E47784</color>
 </resources>

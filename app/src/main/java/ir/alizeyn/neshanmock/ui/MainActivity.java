@@ -32,20 +32,16 @@ public class MainActivity extends AppCompatActivity {
         LngLat focalPoint = new LngLat(59.5521763, 36.3076283);
         map.setFocalPointPosition(focalPoint, 0f);
         map.setZoom(14f, 0f);
-        //add basemap layer
         map.getLayers().add(NeshanServices.createBaseMap(NeshanMapStyle.NESHAN));
 
 
-        GPSManager.getInstance(this).setOnGPSFixed(new GPSManager.OnGPSFixedListener() {
-            @Override
-            public void onLocationChanged(Location loc, LngLat pos) {
-                if (!firstRecenter) {
-                    map.setFocalPointPosition(new LngLat(loc.getLongitude(), loc.getLatitude()), 1f);
-                    map.setZoom(17f, 0f);
-                    firstRecenter = true;
-                }
-//                ivGpsStatus.setImageResource(R.drawable.circle_green);
+        GPSManager.getInstance(this).setOnGPSFixed((loc, pos) -> {
+            if (!firstRecenter) {
+                map.setFocalPointPosition(new LngLat(loc.getLongitude(), loc.getLatitude()), 1f);
+                map.setZoom(17f, 0f);
+                firstRecenter = true;
             }
+//                ivGpsStatus.setImageResource(R.drawable.circle_green);
         });
 
         GPSManager.getInstance(this).start();

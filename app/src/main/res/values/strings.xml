@@ -6,5 +6,13 @@
     <string name="share">Share</string>
     <string name="navigation">Navigation</string>
     <string name="customMock">Custom</string>
-    <string name="main_menu_title">N e s h a n M o c k</string>
+    <string name="main_menu_title">N e s h a n  M o c k</string>
+
+
+    <string name="please_grant_location_permission">استفاده از این اپلیکیشن نیازمند مجوز مکان یاب شما میباشد.</string>
+    <string name="gps_enable">فعال سازی GPS</string>
+    <string name="gps_wait">در انتظار دریافت GPS…</string>
+    <string name="please_enable_gps">"برای عملکرد درست مسیریاب نشان لطفا GPS گوشی خود را روشن و روی دقت بالا (High Accuracy) تنظیم کنید."</string>
+    <string name="later">بعدا</string>
+
 </resources>
