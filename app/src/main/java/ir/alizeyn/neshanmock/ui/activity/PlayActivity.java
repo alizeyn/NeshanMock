@@ -19,6 +19,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -156,8 +158,11 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
                     location.setLatitude(pos.getLat());
                     location.setLongitude(pos.getLng());
                     location.setAccuracy(pos.getAccuracy());
-                    location.setTime(pos.getTime());
-                    location.setElapsedRealtimeNanos(pos.getTime());
+                    long timeDiff = Math.abs(pos.getTime() - mock.getId());
+                    Log.i("alizeyn-location", "timeDiff : " + timeDiff);
+                    Log.i("alizeyn-location", "mockStart : " + mock.getId());
+                    location.setTime(System.currentTimeMillis() + timeDiff);
+                    location.setElapsedRealtimeNanos(SystemClock.elapsedRealtimeNanos() + timeDiff);
 
                     locationManager.setTestProviderLocation(MOCK_PROVIDER, location);
                 }
@@ -183,6 +188,7 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onLocationChanged(Location location) {
         setLocationMarker(new LngLat(location.getLongitude(), location.getLatitude()), true);
+        Log.i("alizeyn-location-change", "onLocationChanged: " + location.getTime());
     }
 
     @Override
