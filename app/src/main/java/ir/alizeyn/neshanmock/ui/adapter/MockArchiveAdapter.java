@@ -1,6 +1,7 @@
 package ir.alizeyn.neshanmock.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import ir.alizeyn.neshanmock.R;
 import ir.alizeyn.neshanmock.database.DatabaseClient;
 import ir.alizeyn.neshanmock.database.MockEntity;
 import ir.alizeyn.neshanmock.ui.activity.MockArchiveActivity;
+import ir.alizeyn.neshanmock.ui.activity.PlayActivity;
 
 /**
  * @author alizeyn
@@ -87,8 +89,8 @@ public class MockArchiveAdapter extends RecyclerView.Adapter<MockArchiveAdapter.
                         case R.id.share:
                             Toast.makeText(context, "share", Toast.LENGTH_SHORT).show();
                             return true;
-                        case R.id.fav:
-                            Toast.makeText(context, "fav", Toast.LENGTH_SHORT).show();
+                        case R.id.upload:
+                            Toast.makeText(context, "up", Toast.LENGTH_SHORT).show();
                             return true;
                         case R.id.del:
                             Toast.makeText(context, "del", Toast.LENGTH_SHORT).show();
@@ -104,6 +106,12 @@ public class MockArchiveAdapter extends RecyclerView.Adapter<MockArchiveAdapter.
                     return false;
                 });
                 popupMenu.show();
+            });
+            itemView.setOnClickListener(v -> {
+                MockEntity mock = mockList.get(getAdapterPosition());
+                Intent intent = new Intent(context, PlayActivity.class);
+                intent.putExtra("mockData", mock);
+                context.startActivity(intent);
             });
         }
     }

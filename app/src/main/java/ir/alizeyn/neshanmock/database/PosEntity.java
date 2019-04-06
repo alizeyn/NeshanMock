@@ -30,22 +30,25 @@ public class PosEntity implements Serializable {
 
     private double lat;
 
-    private double speed;
+    private float speed;
 
     private long time;
 
-    private double accuracy;
+    private long elapsedRealtime;
 
-    private double bearing;
+    private float accuracy;
+
+    private float bearing;
 
     private String provider;
 
-    public PosEntity(long mock_id, double lng, double lat, double speed, long time, double accuracy, double bearing, String provider) {
+    public PosEntity(long mock_id, double lng, double lat, float speed, long time, long elapsedRealtime, float accuracy, float bearing, String provider) {
         this.mock_id = mock_id;
         this.lng = lng;
         this.lat = lat;
         this.speed = speed;
         this.time = time;
+        this.elapsedRealtime = elapsedRealtime;
         this.accuracy = accuracy;
         this.bearing = bearing;
         this.provider = provider;
@@ -83,11 +86,11 @@ public class PosEntity implements Serializable {
         this.lat = lat;
     }
 
-    public double getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
-    public void setSpeed(double speed) {
+    public void setSpeed(float speed) {
         this.speed = speed;
     }
 
@@ -99,19 +102,27 @@ public class PosEntity implements Serializable {
         this.time = time;
     }
 
-    public double getAccuracy() {
+    public long getElapsedRealtime() {
+        return elapsedRealtime;
+    }
+
+    public void setElapsedRealtime(long elapsedRealtime) {
+        this.elapsedRealtime = elapsedRealtime;
+    }
+
+    public float getAccuracy() {
         return accuracy;
     }
 
-    public void setAccuracy(double accuracy) {
+    public void setAccuracy(float accuracy) {
         this.accuracy = accuracy;
     }
 
-    public double getBearing() {
+    public float getBearing() {
         return bearing;
     }
 
-    public void setBearing(double bearing) {
+    public void setBearing(float bearing) {
         this.bearing = bearing;
     }
 

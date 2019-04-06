@@ -103,6 +103,7 @@ public class TrackActivity extends AppCompatActivity {
                         loc.getLatitude(),
                         loc.getSpeed(),
                         loc.getTime(),
+                        loc.getElapsedRealtimeNanos(),
                         loc.getAccuracy(),
                         loc.getBearing(),
                         loc.getProvider());

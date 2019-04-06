@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <org.neshan.ui.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="24dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPlayTrack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:minWidth="200dp"
+                android:text="Play Mock"
+                app:backgroundTint="@color/neshanGreen"
+                app:icon="@drawable/ic_play_arrow" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStopTrack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:minWidth="200dp"
+                android:text="Stop Mock"
+                android:visibility="gone"
+                app:backgroundTint="@color/neshanGreen"
+                app:icon="@drawable/ic_stop" />
+
+            <ImageView
+                android:id="@+id/ivMockStatus"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_alignParentTop="true"
+                android:background="@color/gpsDeactivateStatus" />
+
+            <TableLayout
+                android:id="@+id/tableDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ivMockStatus"
+                android:background="@color/neshanGray"
+                android:padding="8dp">
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/tvLat"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:text="lat"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tvLatValue"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="..."
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tvLng"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:text="lng"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tvLngValue"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="..."
+                        android:textColor="@android:color/black" />
+
+                </TableRow>
+
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/tvSpeed"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:text="Speed"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tvSpeedValue"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="..."
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tvAcc"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:text="Acc"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tvAccValue"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="..."
+                        android:textColor="@android:color/black" />
+
+                </TableRow>
+
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/tvTime"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:text="Time"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tvTimeValue"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="..."
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tvProvider"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:padding="4dp"
+                        android:text="Provider"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/tvProviderValue"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="..."
+                        android:textColor="@android:color/black" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_below="@id/tableDetails"
+                android:background="@drawable/shadow_below" />
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</LinearLayout>

@@ -5,9 +5,9 @@
             android:icon="@drawable/ic_fiber_manual_record"
             android:title="Share" />
         <item
-            android:id="@+id/fav"
+            android:id="@+id/upload"
             android:icon="@drawable/ic_stop"
-            android:title="Add to Fav" />
+            android:title="Upload" />
         <item
             android:id="@+id/del"
             android:icon="@drawable/ic_reorder"
