@@ -14,5 +14,6 @@
     <string name="gps_wait">در انتظار دریافت GPS…</string>
     <string name="please_enable_gps">"برای عملکرد درست مسیریاب نشان لطفا GPS گوشی خود را روشن و روی دقت بالا (High Accuracy) تنظیم کنید."</string>
     <string name="later">بعدا</string>
+    <string name="title_activity_import">ImportActivity</string>
 
 </resources>

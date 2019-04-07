@@ -21,7 +21,9 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.neshan.core.LngLat;
+import org.neshan.core.LngLatVector;
 import org.neshan.geometry.PointGeom;
+import org.neshan.graphics.ARGB;
 import org.neshan.layers.VectorElementLayer;
 import org.neshan.services.NeshanMapStyle;
 import org.neshan.services.NeshanServices;
@@ -29,10 +31,12 @@ import org.neshan.styles.AnimationStyle;
 import org.neshan.styles.AnimationStyleBuilder;
 import org.neshan.styles.AnimationType;
 import org.neshan.styles.BaseMarkerStyleCreator;
+import org.neshan.styles.LineStyleCreator;
 import org.neshan.styles.MarkerStyle;
 import org.neshan.styles.MarkerStyleCreator;
 import org.neshan.ui.MapView;
 import org.neshan.utils.BitmapUtils;
+import org.neshan.vectorelements.Line;
 import org.neshan.vectorelements.Marker;
 
 import java.util.Date;
@@ -84,6 +88,7 @@ public class TrackActivity extends AppCompatActivity {
         listener();
 
         // Start getting gps
+        final LngLat[] lastPosEntity = {null};
         GPSManager.getInstance(this).setOnGPSFixed((loc, pos) -> {
             LngLat currentPos = new LngLat(loc.getLongitude(), loc.getLatitude());
             float mapMoveSpeed = 1f;
@@ -95,7 +100,6 @@ public class TrackActivity extends AppCompatActivity {
             map.setZoom(17.5f, 0f);
             ivGpsStatus.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gpsActiveStatus));
             setLocationDetails(loc);
-            setLocationMarker(currentPos);
 
             if (tracking) {
                 PosEntity posEntity = new PosEntity(mockStartTime,
@@ -114,9 +118,16 @@ public class TrackActivity extends AppCompatActivity {
                         .insertPos(posEntity));
             }
 
-        });
-        GPSManager.getInstance(this).start();
+            if (lastPosEntity[0] == null) {
+                lastPosEntity[0] = currentPos;
+                return;
+            }
 
+            setLine(lastPosEntity[0], currentPos, tracking);
+            lastPosEntity[0] = currentPos;
+        });
+
+        GPSManager.getInstance(this).start();
     }
 
     private void initMap() {
@@ -194,6 +205,20 @@ public class TrackActivity extends AppCompatActivity {
 
         Marker marker = new Marker(loc, markerStyleCreator.buildStyle());
         markerLayer.add(marker);
+    }
+
+    private void setLine(LngLat p1, LngLat p2, boolean tracking) {
+
+        LineStyleCreator lineStyleCreator = new LineStyleCreator();
+        lineStyleCreator.setWidth(8);
+        ARGB greenColor = new ARGB(0Xff00ff00);
+        ARGB redColor = new ARGB(0Xffff0000);
+        lineStyleCreator.setColor(tracking ? greenColor : redColor);
+        LngLatVector lngLatVector = new LngLatVector();
+        lngLatVector.add(p1);
+        lngLatVector.add(p2);
+        Line line = new Line(lngLatVector, lineStyleCreator.buildStyle());
+        markerLayer.add(line);
     }
 
     private Dialog createSaveMockDialog() {

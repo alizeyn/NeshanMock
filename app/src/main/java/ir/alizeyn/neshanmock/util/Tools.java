@@ -38,6 +38,22 @@ public class Tools {
         return true;
     }
 
+    public static boolean getStoragePermisstion(Activity activity, boolean openPermissionDialog) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (activity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+                    activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (openPermissionDialog) {
+                    activity.requestPermissions(new String[]{
+                                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            1001);
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static String convertTime(long time){
         Date date = new Date(time);
         Format format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
@@ -69,7 +85,6 @@ public class Tools {
         return false;
     }
 
-
     public static boolean isGooglePlayServicesAvailable(Context context) {
         try {
             GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
@@ -79,4 +94,5 @@ public class Tools {
             return false;
         }
     }
+
 }

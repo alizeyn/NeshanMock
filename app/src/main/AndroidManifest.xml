@@ -4,11 +4,13 @@
     package="ir.alizeyn.neshanmock">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"
+    <uses-permission
+        android:name="android.permission.ACCESS_MOCK_LOCATION"
         tools:ignore="MockLocation,ProtectedPermissions" />
-
 
     <application
         android:allowBackup="true"
@@ -17,7 +19,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.PlayActivity"></activity>
+        <activity
+            android:name=".ui.activity.ImportActivity"
+            android:label="@string/title_activity_import">
+
+            <intent-filter android:icon="@drawable/ic_save"
+                android:label="Neshan Mock"
+                android:priority="10">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.mock" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".ui.activity.PlayActivity" />
         <activity android:name=".ui.activity.MockArchiveActivity" />
         <activity android:name=".ui.activity.CustomMockActivity" />
         <activity android:name=".ui.activity.MenuActivity">

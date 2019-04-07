@@ -3,6 +3,9 @@ package ir.alizeyn.neshanmock.ui.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +15,21 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Database;
 import ir.alizeyn.neshanmock.R;
 import ir.alizeyn.neshanmock.database.DatabaseClient;
 import ir.alizeyn.neshanmock.database.MockEntity;
-import ir.alizeyn.neshanmock.ui.activity.MockArchiveActivity;
+import ir.alizeyn.neshanmock.database.PosEntity;
+import ir.alizeyn.neshanmock.mock.MockShareModel;
 import ir.alizeyn.neshanmock.ui.activity.PlayActivity;
 
 /**
@@ -86,8 +94,34 @@ public class MockArchiveAdapter extends RecyclerView.Adapter<MockArchiveAdapter.
                     MockEntity mock = mockList.get(getAdapterPosition());
 
                     switch (menuItem.getItemId()) {
-                        case R.id.share:
-                            Toast.makeText(context, "share", Toast.LENGTH_SHORT).show();
+                        case R.id.save:
+                            AsyncTask.execute(() -> {
+                                try {
+                                    List<PosEntity> poses = DatabaseClient.getInstance(context)
+                                            .getMockDatabase()
+                                            .getPosDao()
+                                            .getMockPos(mock.getId());
+                                    MockShareModel shareModel = new MockShareModel(mock, poses);
+                                    File file = new File(Environment.getExternalStoragePublicDirectory("NeshanMock") , mock.getId() + ".mock");
+                                    if (!file.exists()) {
+                                        file.getParentFile().mkdirs();
+                                        file.createNewFile();
+                                    }
+                                    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+                                    out.writeObject(shareModel);
+                                    out.close();
+
+                                    new Handler(Looper.getMainLooper()).post(() -> {
+                                        Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
+                                    });
+
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+
                             return true;
                         case R.id.upload:
                             Toast.makeText(context, "up", Toast.LENGTH_SHORT).show();

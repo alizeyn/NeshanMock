@@ -23,6 +23,7 @@ public class MenuActivity extends AppCompatActivity {
         listeners();
 
         Tools.getLocationPermission(this, true);
+        Tools.getStoragePermisstion(this, true);
     }
 
 
