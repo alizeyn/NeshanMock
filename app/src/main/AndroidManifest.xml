@@ -25,14 +25,13 @@
 
             <intent-filter android:icon="@drawable/ic_save"
                 android:label="Neshan Mock"
-                android:priority="10">
+                android:priority="1">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="file" />
                 <data android:scheme="content" />
                 <data android:host="*" />
-                <data android:pathPattern=".*\\.mock" />
                 <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\.mock"/>
             </intent-filter>
 
         </activity>

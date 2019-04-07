@@ -2,6 +2,8 @@ package ir.alizeyn.neshanmock.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -24,6 +26,7 @@ public class MenuActivity extends AppCompatActivity {
 
         Tools.getLocationPermission(this, true);
         Tools.getStoragePermisstion(this, true);
+
     }
 
 
