@@ -72,6 +72,16 @@
                     app:backgroundTint="@color/neshanGreen"
                     app:icon="@drawable/ic_reorder" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnMockImport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:minWidth="200dp"
+                    android:text="Import Mock  "
+                    app:backgroundTint="@color/neshanGreen"
+                    app:icon="@drawable/ic_file_download" />
+
             </LinearLayout>
 
         </LinearLayout>

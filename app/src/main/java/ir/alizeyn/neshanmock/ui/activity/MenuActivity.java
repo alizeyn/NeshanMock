@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Menu;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -15,6 +16,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private MaterialButton btnRecordTrack;
     private MaterialButton btnMockArchive;
+    private MaterialButton btnMockImport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +35,13 @@ public class MenuActivity extends AppCompatActivity {
     private void initViews() {
         btnRecordTrack = findViewById(R.id.btnRecordTrack);
         btnMockArchive = findViewById(R.id.btnMockArchive);
+        btnMockImport = findViewById(R.id.btnMockImport);
     }
 
     private void listeners() {
         btnRecordTrack.setOnClickListener(view -> startActivity(new Intent(MenuActivity.this, TrackActivity.class)));
         btnMockArchive.setOnClickListener(view -> startActivity(new Intent(MenuActivity.this, MockArchiveActivity.class)));
+        btnMockImport.setOnClickListener(view -> startActivity(new Intent(MenuActivity.this, ImportActivity.class)));
     }
 
 }

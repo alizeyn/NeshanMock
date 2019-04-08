@@ -114,26 +114,31 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
                 });
 
                 locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                if (locationManager.getProvider(MOCK_PROVIDER) == null) {
-                    try {
-                        locationManager.addTestProvider(MOCK_PROVIDER,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                0,
-                                1);
-                    } catch (SecurityException e) {
-                        e.printStackTrace();
-                        allowForMock();
-
-                    }
-                }
             }
         }
+
+    }
+
+    @SuppressLint("MissingPermission")
+    private void addMockProvider() {
+        try {
+            locationManager.addTestProvider(MOCK_PROVIDER,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    0,
+                    1);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            allowForMock();
+        }
+
+        locationManager.setTestProviderEnabled(MOCK_PROVIDER, true);
+        locationManager.requestLocationUpdates(MOCK_PROVIDER, 0, 0, this);
 
     }
 
@@ -216,8 +221,7 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
             ivMockStatus.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gpsActiveStatus));
 
             try {
-                locationManager.setTestProviderEnabled(MOCK_PROVIDER, true);
-                locationManager.requestLocationUpdates(MOCK_PROVIDER, 0, 0, this);
+                addMockProvider();
 
                 for (PosEntity pos :
                         mockPoints) {
@@ -229,8 +233,6 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
                     location.setAccuracy(pos.getAccuracy());
                     long timeDiff = Math.abs(pos.getTime() - mock.getId());
                     location.setTime(System.currentTimeMillis() + timeDiff);
-                    Log.i("alizeyn-location", "timeDiff : " + timeDiff);
-                    Log.i("alizeyn-location", "mockStart : " + mock.getId());
                     location.setElapsedRealtimeNanos(SystemClock.elapsedRealtimeNanos() + timeDiff);
 
                     Observable<Location> locationPublisher = Observable.just(location)
@@ -276,6 +278,7 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
             ivMockStatus.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gpsDeactivateStatus));
 
             locationManager.setTestProviderEnabled(MOCK_PROVIDER, false);
+//            locationManager.removeTestProvider(MOCK_PROVIDER);
             locationManager.removeUpdates(this);
 
             markerLayer.clear();
