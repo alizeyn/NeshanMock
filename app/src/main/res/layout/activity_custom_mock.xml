@@ -23,6 +23,19 @@
             android:layout_marginBottom="24dp">
 
             <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_location_on"
+                android:tint="@color/colorPrimary"
+                android:layout_below="@id/centerLine"/>
+
+            <View
+                android:id="@+id/centerLine"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
                 android:id="@+id/ivCompass"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
