@@ -1,9 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.activity.CustomMockActivity">
+    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="24dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSelectOrigin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:minWidth="200dp"
+                android:text="Select Origin"
+                app:backgroundTint="@color/neshanGreen"
+                app:icon="@drawable/ic_fiber_manual_record" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSelectDest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:minWidth="200dp"
+                android:text="Select Dest  "
+                android:visibility="gone"
+                app:backgroundTint="@color/neshanGreen"
+                app:icon="@drawable/ic_fiber_manual_record" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveMock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:minWidth="200dp"
+                android:text="Start Mock"
+                android:visibility="gone"
+                app:backgroundTint="@color/neshanGreen"
+                app:icon="@drawable/ic_fiber_manual_record" />
+
+            <ProgressBar
+                android:id="@+id/pb"
+                style="@style/Base.Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <org.neshan.ui.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+</LinearLayout>

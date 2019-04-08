@@ -17,6 +17,12 @@ public interface MockDao {
     @Query("SELECT * FROM mock")
     List<MockEntity> getAll();
 
+    @Query("SELECT * FROM mock WHERE mock_type == 'TRACK' ")
+    List<MockEntity> getTracks();
+
+    @Query("SELECT * FROM mock WHERE mock_type == 'CUSTOM'")
+    List<MockEntity> getCustoms();
+
     @Insert
     long insert(MockEntity mockEntity);
 

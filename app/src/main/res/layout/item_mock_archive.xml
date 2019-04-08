@@ -4,13 +4,16 @@
     android:id="@+id/cvMockItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
     android:foreground="?attr/selectableItemBackgroundBorderless"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
     app:cardCornerRadius="15dp"
-    app:cardElevation="8dp">
+    app:cardElevation="4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,12 +21,12 @@
 
         <ImageView
             android:id="@+id/iv_more"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="16dp"
+            android:layout_margin="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
@@ -33,9 +36,9 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp">
+            android:layout_margin="8dp">
 
-            <TableRow android:layout_marginTop="4dp">
+            <TableRow android:layout_marginTop="4dp" android:visibility="gone">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -84,8 +87,9 @@
             <TableRow android:layout_marginTop="4dp">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_description" />
 
                 <TextView
@@ -98,7 +102,7 @@
                 <TextView
                     android:id="@+id/tvDesc"
                     android:layout_weight="1"
-                    android:gravity="start"
+                    android:gravity="left"
                     android:padding="4dp"
                     android:text="..."
                     android:textColor="@android:color/black" />

@@ -21,12 +21,20 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.ImportActivity"
-            android:label="@string/title_activity_import"/>
+            android:label="@string/title_activity_import" />
 
-        <activity android:name=".ui.activity.PlayActivity" />
-        <activity android:name=".ui.activity.MockArchiveActivity" />
-        <activity android:name=".ui.activity.CustomMockActivity" />
-        <activity android:name=".ui.activity.MenuActivity">
+        <activity
+            android:name=".ui.activity.PlayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MockArchiveActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CustomMockActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MenuActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
