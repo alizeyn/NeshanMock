@@ -1,6 +1,8 @@
 package ir.alizeyn.neshanmock.ui.activity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.google.android.material.button.MaterialButton;
@@ -22,7 +24,8 @@ public class CustomMockActivity extends AppCompatActivity {
     private MaterialButton btnSelectOrigin;
     private MaterialButton btnSelectDest;
     private MaterialButton btnSaveMock;
-    private ProgressBar    pb;
+    private ImageView ivCompass;
+    private ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class CustomMockActivity extends AppCompatActivity {
         btnSelectDest = findViewById(R.id.btnSelectDest);
         btnSaveMock = findViewById(R.id.btnSaveMock);
         pb = findViewById(R.id.pb);
+        ivCompass = findViewById(R.id.ivCompass);
     }
 
     private void initMap() {
@@ -52,15 +56,22 @@ public class CustomMockActivity extends AppCompatActivity {
     private void listeners() {
 
         btnSelectOrigin.setOnClickListener(v -> {
-
+            btnSelectOrigin.setVisibility(View.GONE);
+            btnSelectDest.setVisibility(View.VISIBLE);
         });
 
         btnSelectDest.setOnClickListener(v -> {
-
+            btnSelectDest.setVisibility(View.GONE);
+            pb.setVisibility(View.VISIBLE);
         });
 
         btnSaveMock.setOnClickListener(v -> {
 
+
+        });
+
+        ivCompass.setOnClickListener(v -> {
+            map.setBearing(0f, 0.2f);
         });
     }
 }
