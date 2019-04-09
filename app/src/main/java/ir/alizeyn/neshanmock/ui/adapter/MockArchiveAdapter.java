@@ -30,7 +30,9 @@ import ir.alizeyn.neshanmock.database.DatabaseClient;
 import ir.alizeyn.neshanmock.database.MockEntity;
 import ir.alizeyn.neshanmock.database.PosEntity;
 import ir.alizeyn.neshanmock.mock.MockShareModel;
+import ir.alizeyn.neshanmock.mock.MockType;
 import ir.alizeyn.neshanmock.ui.activity.PlayActivity;
+import ir.alizeyn.neshanmock.ui.activity.PlayCustomActivity;
 
 /**
  * @author alizeyn
@@ -102,7 +104,7 @@ public class MockArchiveAdapter extends RecyclerView.Adapter<MockArchiveAdapter.
                                             .getPosDao()
                                             .getMockPos(mock.getId());
                                     MockShareModel shareModel = new MockShareModel(mock, poses);
-                                    File file = new File(Environment.getExternalStoragePublicDirectory("NeshanMock") , mock.getId() + ".mock");
+                                    File file = new File(Environment.getExternalStoragePublicDirectory("NeshanMock"), mock.getId() + ".mock");
                                     if (!file.exists()) {
                                         file.getParentFile().mkdirs();
                                         file.createNewFile();
@@ -143,7 +145,12 @@ public class MockArchiveAdapter extends RecyclerView.Adapter<MockArchiveAdapter.
             });
             itemView.setOnClickListener(v -> {
                 MockEntity mock = mockList.get(getAdapterPosition());
-                Intent intent = new Intent(context, PlayActivity.class);
+                Intent intent;
+                if (mock.getMockType().equals(MockType.TRACK.name())) {
+                    intent = new Intent(context, PlayActivity.class);
+                } else {
+                    intent = new Intent(context, PlayCustomActivity.class);
+                }
                 intent.putExtra("mockData", mock);
                 context.startActivity(intent);
             });

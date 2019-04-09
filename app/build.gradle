@@ -8,8 +8,8 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
-        buildConfigField 'String', 'ROUTING_URL', '"https://api.neshan.org/v2/direction?parameters"'
+        multiDexEnabled true
+        buildConfigField 'String', 'ROUTING_URL', '"https://api.neshan.org/v2/"'
 
     }
     buildTypes {
@@ -23,7 +23,7 @@ android {
         abi {
             enable true
             reset()
-            include 'x86, armeabi-v7a'
+            include 'armeabi-v7a'
             universalApk false
         }
     }
