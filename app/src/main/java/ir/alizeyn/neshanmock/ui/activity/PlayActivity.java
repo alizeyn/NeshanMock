@@ -50,7 +50,9 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
 
     public static final String MOCK_PROVIDER = "gps";
     private MapView map;
-    private VectorElementLayer markerLayer;
+    private VectorElementLayer layerMove;
+    private VectorElementLayer layerStatic;
+    private LngLatVector lineVector;
 
     private MaterialButton btnPlayTrack;
     private MaterialButton btnStopTrack;
@@ -68,7 +70,6 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
     private MockEntity mock;
     private LocationManager locationManager;
 
-    LngLat lastPosEntity = null;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -89,28 +90,12 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
                             .getPosDao()
                             .getMockPos(mock.getId());
 
-
+                    lineVector = new LngLatVector();
                     for (PosEntity pos : mockPoints) {
-
                         LngLat lnglat = new LngLat(pos.getLng(), pos.getLat());
-                        if (lastPosEntity == null) {
-                            lastPosEntity = lnglat;
-                            continue;
-                        }
-
-                        setLine(lastPosEntity, lnglat, false);
-                        lastPosEntity = lnglat;
+                        lineVector.add(lnglat);
                     }
-
-                    PosEntity minPos = mockPoints.get(0);
-                    PosEntity maxPos = mockPoints.get(mockPoints.size() - 1);
-                    LngLat minLngLat = new LngLat(minPos.getLng(), minPos.getLat());
-                    LngLat maxLngLat = new LngLat(maxPos.getLng(), maxPos.getLat());
-                    map.moveToCameraBounds(new Bounds(minLngLat, maxLngLat),
-                            new ViewportBounds(new ViewportPosition(0, tableDetails.getHeight()), new ViewportPosition(map.getWidth(), map.getHeight())),
-                            true,
-                            0.5f);
-
+                    setLine(lineVector, layerStatic, false);
                 });
 
                 locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -153,7 +138,7 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
         alertDialog.show();
     }
 
-    private Line setLine(LngLat p1, LngLat p2, boolean tracking) {
+    private Line setLine(LngLat p1, LngLat p2, VectorElementLayer layer, boolean tracking) {
 
         LineStyleCreator lineStyleCreator = new LineStyleCreator();
         lineStyleCreator.setWidth(8);
@@ -164,15 +149,29 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
         lngLatVector.add(p1);
         lngLatVector.add(p2);
         Line line = new Line(lngLatVector, lineStyleCreator.buildStyle());
-        markerLayer.add(line);
+        layer.add(line);
+        return line;
+    }
+
+    private Line setLine(LngLatVector lineVector, VectorElementLayer layer, boolean tracking) {
+
+        LineStyleCreator lineStyleCreator = new LineStyleCreator();
+        lineStyleCreator.setWidth(8);
+        ARGB greenColor = new ARGB(0Xff00ff00);
+        ARGB redColor = new ARGB(0Xffff0000);
+        lineStyleCreator.setColor(tracking ? greenColor : redColor);
+        Line line = new Line(lineVector, lineStyleCreator.buildStyle());
+        layer.add(line);
         return line;
     }
 
     private void initMap() {
         map.setZoom(14f, 0f);
         map.getLayers().add(NeshanServices.createBaseMap(NeshanMapStyle.NESHAN));
-        markerLayer = NeshanServices.createVectorElementLayer();
-        map.getLayers().add(markerLayer);
+        layerStatic = NeshanServices.createVectorElementLayer();
+        layerMove = NeshanServices.createVectorElementLayer();
+        map.getLayers().add(layerStatic);
+        map.getLayers().add(layerMove);
     }
 
     private void initViews() {
@@ -196,7 +195,7 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
         tvLatValue.setText(lat);
         String lng = String.format(Locale.getDefault(), "%.5f", loc.getLongitude());
         tvLngValue.setText(lng);
-        String speed = String.format(Locale.getDefault(), "%.2f", loc.getSpeed());
+        String speed = String.format(Locale.getDefault(), "%.2f", loc.getSpeed() * 3.6);
         tvSpeedValue.setText(speed);
         String acc = String.format(Locale.getDefault(), "%.2f", loc.getAccuracy());
         tvAccValue.setText(acc);
@@ -281,7 +280,7 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
 //            locationManager.removeTestProvider(MOCK_PROVIDER);
             locationManager.removeUpdates(this);
 
-            markerLayer.clear();
+            layerMove.clear();
             cleanLocationDetails();
         });
     }
@@ -298,7 +297,7 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
         }
 
         LngLat lngLat = new LngLat(location.getLongitude(), location.getLatitude());
-        setLine(lastLocation, lngLat, true);
+        setLine(lastLocation, lngLat, layerMove, true);
 //        setLocationMarker(lngLat, true);
         lastLocation = lngLat;
         Log.i("alizeyn-location-change", "onLocationChanged: " + location.getTime());
@@ -317,5 +316,14 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        map.moveToCameraBounds(new Bounds(lineVector.get(0), lineVector.get((int) (lineVector.size() - 1))),
+                new ViewportBounds(new ViewportPosition(0, tableDetails.getHeight()), new ViewportPosition(map.getWidth(), map.getHeight())),
+                true,
+                0.5f);
     }
 }

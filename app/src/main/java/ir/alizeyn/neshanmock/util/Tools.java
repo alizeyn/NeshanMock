@@ -10,6 +10,12 @@ import android.provider.Settings;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
+
+import org.neshan.core.LngLat;
+import org.neshan.core.LngLatVector;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -54,7 +60,7 @@ public class Tools {
         return true;
     }
 
-    public static String convertTime(long time){
+    public static String convertTime(long time) {
         Date date = new Date(time);
         Format format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         return format.format(date);
@@ -97,5 +103,46 @@ public class Tools {
 
     public static String getAndroidId(Context context) {
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    /**
+     * Calculate distance between two points in latitude and longitude taking
+     * into account height difference. If you are not interested in height
+     * difference pass 0.0. Uses Haversine method as its base.
+     * <p>
+     * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters
+     * el2 End altitude in meters
+     *
+     * @returns Distance in Meters
+     */
+    public static double distance(LngLat p1, LngLat p2) {
+
+        double lat1 = p1.getX();
+        double lat2 = p2.getX();
+        double lon1 = p1.getY();
+        double lon2 = p2.getY();
+
+        final int R = 6371; // Radius of the earth
+
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+
+        distance = Math.pow(distance, 2);
+
+        return Math.sqrt(distance);
+    }
+
+    public static LineString convertLineToLineString(LngLatVector poses) {
+        Coordinate[] lineCoordinate = new Coordinate[(int) poses.size()];
+        for (int j = 0; j < poses.size(); j++) {
+            LngLat mapPos = poses.get(j);
+            lineCoordinate[j] = new Coordinate(mapPos.getY(), mapPos.getX());
+        }
+        return new GeometryFactory().createLineString(lineCoordinate);
     }
 }

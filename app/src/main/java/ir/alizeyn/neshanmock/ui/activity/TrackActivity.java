@@ -182,7 +182,7 @@ public class TrackActivity extends AppCompatActivity {
         tvLatValue.setText(lat);
         String lng = String.format(Locale.getDefault(), "%.5f", loc.getLongitude());
         tvLngValue.setText(lng);
-        String speed = String.format(Locale.getDefault(), "%.2f", loc.getSpeed());
+        String speed = String.format(Locale.getDefault(), "%.2f", loc.getSpeed() * 3.6);
         tvSpeedValue.setText(speed);
         String acc = String.format(Locale.getDefault(), "%.2f", loc.getAccuracy());
         tvAccValue.setText(acc);

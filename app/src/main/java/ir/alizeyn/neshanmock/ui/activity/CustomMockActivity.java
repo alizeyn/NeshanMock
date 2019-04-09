@@ -61,6 +61,7 @@ public class CustomMockActivity extends AppCompatActivity {
     private MaterialButton btnSaveMock;
     private MaterialButton btnRefresh;
     private ImageView ivCompass;
+    private ImageView ivCenterMarker;
     private ProgressBar pb;
     private Dialog saveMockDialog;
 
@@ -81,6 +82,7 @@ public class CustomMockActivity extends AppCompatActivity {
         btnRefresh = findViewById(R.id.btnRefresh);
         pb = findViewById(R.id.pb);
         ivCompass = findViewById(R.id.ivCompass);
+        ivCenterMarker = findViewById(R.id.ivCenterMarker);
     }
 
     private void initMap() {
@@ -104,6 +106,7 @@ public class CustomMockActivity extends AppCompatActivity {
         btnSelectDest.setOnClickListener(v -> {
             dest = map.getFocalPointPosition();
             btnSelectDest.setVisibility(View.GONE);
+            ivCenterMarker.setVisibility(View.GONE);
 
             WebServices webServices = RequestFactory.webServices();
             HashMap<String, String> params = new HashMap<>();
@@ -197,6 +200,7 @@ public class CustomMockActivity extends AppCompatActivity {
             pb.setVisibility(View.GONE);
             btnSaveMock.setVisibility(View.VISIBLE);
             btnRefresh.performClick();
+            ivCenterMarker.setVisibility(View.VISIBLE);
             Toast.makeText(CustomMockActivity.this, "Saved!", Toast.LENGTH_SHORT).show();
         }
 
