@@ -11,9 +11,11 @@ import ir.alizeyn.neshanmock.util.Tools;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -56,6 +58,7 @@ public class PlayCustomActivity extends AppCompatActivity implements LocationLis
 
     private MaterialButton btnPlayTrack;
     private MaterialButton btnStopTrack;
+    private MaterialButton btnShare;
     private ImageView ivMockStatus;
     private TableLayout tableDetails;
     private TextView tvLatValue;
@@ -204,6 +207,7 @@ public class PlayCustomActivity extends AppCompatActivity implements LocationLis
         map = findViewById(R.id.map);
         btnPlayTrack = findViewById(R.id.btnPlayTrack);
         btnStopTrack = findViewById(R.id.btnStopTrack);
+        btnShare = findViewById(R.id.btnShare);
         ivMockStatus = findViewById(R.id.ivMockStatus);
 
         tvLatValue = findViewById(R.id.tvLatValue);
@@ -305,6 +309,20 @@ public class PlayCustomActivity extends AppCompatActivity implements LocationLis
             cleanLocationDetails();
         });
 
+        btnShare.setOnClickListener(v -> {
+            LngLat origin = lineVector.get((int) (lineVector.size() - 1));
+            Uri.Builder directionsBuilder = new Uri.Builder()
+                    .scheme("https")
+                    .authority("www.google.com")
+                    .appendPath("maps")
+                    .appendPath("dir")
+                    .appendPath("")
+                    .appendQueryParameter("api", "1")
+                    .appendQueryParameter("destination", origin.getY() + "," + origin.getX());
+
+            startActivity(new Intent(Intent.ACTION_VIEW, directionsBuilder.build()));
+        });
+
         sbSpeed.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
             @Override
             public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
@@ -361,11 +379,11 @@ public class PlayCustomActivity extends AppCompatActivity implements LocationLis
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        map.moveToCameraBounds(new Bounds(lineVector.get(0), lineVector.get((int) (lineVector.size() - 1))),
-                new ViewportBounds(new ViewportPosition(0, tableDetails.getHeight()), new ViewportPosition(map.getWidth(), map.getHeight())),
-                true,
-                0.5f);
+        if (lineVector.size() > 0) {
+            map.moveToCameraBounds(new Bounds(lineVector.get(0), lineVector.get((int) (lineVector.size() - 1))),
+                    new ViewportBounds(new ViewportPosition(0, tableDetails.getHeight()), new ViewportPosition(map.getWidth(), map.getHeight())),
+                    true,
+                    0.5f);
+        }
     }
-
-
 }

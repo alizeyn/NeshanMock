@@ -20,6 +20,18 @@
             android:layout_marginBottom="24dp">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnShare"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tableDetails"
+                android:layout_alignParentRight="true"
+                android:layout_margin="8dp"
+                android:text="share"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="2dp" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnPlayTrack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
