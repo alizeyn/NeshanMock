@@ -15,6 +15,9 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -23,16 +26,14 @@ import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import ir.alizeyn.neshanmock.R;
 import ir.alizeyn.neshanmock.database.DatabaseClient;
 import ir.alizeyn.neshanmock.database.MockEntity;
 import ir.alizeyn.neshanmock.database.PosEntity;
 import ir.alizeyn.neshanmock.mock.MockShareModel;
 import ir.alizeyn.neshanmock.mock.MockType;
-import ir.alizeyn.neshanmock.ui.activity.PlayActivity;
 import ir.alizeyn.neshanmock.ui.activity.PlayCustomActivity;
+import ir.alizeyn.neshanmock.ui.activity.PlayTrackActivity;
 
 /**
  * @author alizeyn
@@ -147,7 +148,7 @@ public class MockArchiveAdapter extends RecyclerView.Adapter<MockArchiveAdapter.
                 MockEntity mock = mockList.get(getAdapterPosition());
                 Intent intent;
                 if (mock.getMockType().equals(MockType.TRACK.name())) {
-                    intent = new Intent(context, PlayActivity.class);
+                    intent = new Intent(context, PlayTrackActivity.class);
                 } else {
                     intent = new Intent(context, PlayCustomActivity.class);
                 }

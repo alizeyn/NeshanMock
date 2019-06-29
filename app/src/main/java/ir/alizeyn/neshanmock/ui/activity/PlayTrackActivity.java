@@ -1,17 +1,5 @@
 package ir.alizeyn.neshanmock.ui.activity;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import ir.alizeyn.neshanmock.R;
-import ir.alizeyn.neshanmock.database.DatabaseClient;
-import ir.alizeyn.neshanmock.database.MockEntity;
-import ir.alizeyn.neshanmock.database.PosEntity;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +16,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -48,7 +40,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class PlayActivity extends AppCompatActivity implements LocationListener {
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import ir.alizeyn.neshanmock.R;
+import ir.alizeyn.neshanmock.database.DatabaseClient;
+import ir.alizeyn.neshanmock.database.MockEntity;
+import ir.alizeyn.neshanmock.database.PosEntity;
+
+public class PlayTrackActivity extends AppCompatActivity implements LocationListener {
 
     public static final String MOCK_PROVIDER = "gps";
     private MapView map;
@@ -135,7 +136,7 @@ public class PlayActivity extends AppCompatActivity implements LocationListener 
                 .setTitle("Error")
                 .setMessage("select this app as mock location app in setting.")
                 .setCancelable(false)
-                .setPositiveButton("Ok", (dialogInterface, i) -> PlayActivity.this.finish())
+                .setPositiveButton("Ok", (dialogInterface, i) -> PlayTrackActivity.this.finish())
                 .create();
 
         alertDialog.show();
