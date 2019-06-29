@@ -20,7 +20,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.PlayCustomActivity"></activity>
+        <activity android:name=".ui.activity.AuthAcitivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.PlayCustomActivity" />
         <activity
             android:name=".ui.activity.ImportActivity"
             android:label="@string/title_activity_import" />

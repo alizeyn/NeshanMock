@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.os.health.SystemHealthManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import android.widget.Toolbar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -28,12 +28,9 @@ import org.neshan.ui.MapView;
 import org.neshan.vectorelements.Line;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import ir.alizeyn.neshanmock.R;
 import ir.alizeyn.neshanmock.database.DatabaseClient;
 import ir.alizeyn.neshanmock.database.MockEntity;
@@ -42,7 +39,6 @@ import ir.alizeyn.neshanmock.mock.MockType;
 import ir.alizeyn.neshanmock.request.RequestFactory;
 import ir.alizeyn.neshanmock.request.RouteResponse;
 import ir.alizeyn.neshanmock.request.WebServices;
-import okhttp3.Route;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -108,7 +104,7 @@ public class CustomMockActivity extends AppCompatActivity {
             btnSelectDest.setVisibility(View.GONE);
             ivCenterMarker.setVisibility(View.GONE);
 
-            WebServices webServices = RequestFactory.webServices();
+            WebServices webServices = RequestFactory.neshanWebServices();
             HashMap<String, String> params = new HashMap<>();
             params.put("origin", origin.getY() + "," + origin.getX());
             params.put("destination", dest.getY() + "," + dest.getX());

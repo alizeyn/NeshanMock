@@ -32,8 +32,13 @@ import ir.alizeyn.neshanmock.database.MockEntity;
 import ir.alizeyn.neshanmock.database.PosEntity;
 import ir.alizeyn.neshanmock.mock.MockShareModel;
 import ir.alizeyn.neshanmock.mock.MockType;
+import ir.alizeyn.neshanmock.request.MockWebServices;
+import ir.alizeyn.neshanmock.request.RequestFactory;
 import ir.alizeyn.neshanmock.ui.activity.PlayCustomActivity;
 import ir.alizeyn.neshanmock.ui.activity.PlayTrackActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * @author alizeyn
@@ -44,9 +49,12 @@ public class MockArchiveAdapter extends RecyclerView.Adapter<MockArchiveAdapter.
     private Context context;
     private List<MockEntity> mockList;
 
+    private MockWebServices webServices;
+
     public MockArchiveAdapter(Context context) {
         this.context = context;
         mockList = Collections.emptyList();
+        webServices = RequestFactory.mockWebServices();
     }
 
     @NonNull
@@ -128,6 +136,33 @@ public class MockArchiveAdapter extends RecyclerView.Adapter<MockArchiveAdapter.
                             return true;
                         case R.id.upload:
                             Toast.makeText(context, "up", Toast.LENGTH_SHORT).show();
+
+                            AsyncTask.execute(() -> {
+
+                                List<PosEntity> poses = DatabaseClient.getInstance(context)
+                                        .getMockDatabase()
+                                        .getPosDao()
+                                        .getMockPos(mock.getId());
+                                MockShareModel shareModel = new MockShareModel(mock, poses);
+
+                                Call<Void> call = webServices.saveMock(shareModel);
+                                call.enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+
+                                        if (response.isSuccessful()) {
+                                            new Handler(Looper.getMainLooper()).post(() -> {
+                                                Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show();
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+
+                                    }
+                                });
+                            });
                             return true;
                         case R.id.del:
                             Toast.makeText(context, "del", Toast.LENGTH_SHORT).show();

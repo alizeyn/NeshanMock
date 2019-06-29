@@ -10,6 +10,7 @@ android {
         versionName "1.0"
         multiDexEnabled true
         buildConfigField 'String', 'ROUTING_URL', '"https://api.neshan.org/v2/"'
+        buildConfigField 'String', 'MOCK_URL', '"http://localhost:9898"'
 
     }
     buildTypes {
