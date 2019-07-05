@@ -1,11 +1,10 @@
 package ir.alizeyn.neshanmock.database;
 
-import java.io.Serializable;
-
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+
+import java.io.Serializable;
 
 import static androidx.room.ForeignKey.CASCADE;
 
@@ -15,9 +14,9 @@ import static androidx.room.ForeignKey.CASCADE;
  */
 @Entity(tableName = "pos",
         foreignKeys = @ForeignKey(entity = MockEntity.class,
-        parentColumns = "id",
-        childColumns = "mock_id",
-        onDelete = CASCADE))
+                parentColumns = "id",
+                childColumns = "mock_id",
+                onDelete = CASCADE))
 
 public class PosEntity implements Serializable {
 
@@ -34,7 +33,7 @@ public class PosEntity implements Serializable {
 
     private long time;
 
-    private long elapsedRealtime;
+    private long elapsedRealTime;
 
     private float accuracy;
 
@@ -48,10 +47,13 @@ public class PosEntity implements Serializable {
         this.lat = lat;
         this.speed = speed;
         this.time = time;
-        this.elapsedRealtime = elapsedRealtime;
+        this.elapsedRealTime = elapsedRealtime;
         this.accuracy = accuracy;
         this.bearing = bearing;
         this.provider = provider;
+    }
+
+    public PosEntity() {
     }
 
     public long getId() {
@@ -102,12 +104,12 @@ public class PosEntity implements Serializable {
         this.time = time;
     }
 
-    public long getElapsedRealtime() {
-        return elapsedRealtime;
+    public long getElapsedRealTime() {
+        return elapsedRealTime;
     }
 
-    public void setElapsedRealtime(long elapsedRealtime) {
-        this.elapsedRealtime = elapsedRealtime;
+    public void setElapsedRealTime(long elapsedRealTime) {
+        this.elapsedRealTime = elapsedRealTime;
     }
 
     public float getAccuracy() {

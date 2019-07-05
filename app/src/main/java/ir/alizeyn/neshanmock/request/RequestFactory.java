@@ -4,6 +4,7 @@ package ir.alizeyn.neshanmock.request;
 import java.util.concurrent.TimeUnit;
 
 import ir.alizeyn.neshanmock.BuildConfig;
+import ir.alizeyn.neshanmock.auth.AuthInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
@@ -37,6 +38,7 @@ public class RequestFactory {
     final private static OkHttpClient client = new OkHttpClient().newBuilder()
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(20, TimeUnit.SECONDS)
+            .addInterceptor(new AuthInterceptor())
             .addInterceptor(loggingInterceptor)
             .build();
 

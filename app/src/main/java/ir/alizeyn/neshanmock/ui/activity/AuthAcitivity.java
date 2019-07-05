@@ -1,6 +1,7 @@
 package ir.alizeyn.neshanmock.ui.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,7 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 
 import ir.alizeyn.neshanmock.R;
+import ir.alizeyn.neshanmock.auth.AuthRes;
 import ir.alizeyn.neshanmock.request.MockWebServices;
+import ir.alizeyn.neshanmock.request.RequestFactory;
+import ir.alizeyn.neshanmock.util.LoginHelper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AuthAcitivity extends AppCompatActivity {
 
@@ -33,6 +40,7 @@ public class AuthAcitivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        webServices = RequestFactory.mockWebServices();
         initViews();
         listeners();
     }
@@ -68,12 +76,51 @@ public class AuthAcitivity extends AppCompatActivity {
             btnGoToLogin.setVisibility(View.GONE);
         });
 
-        btnSignUp.setOnClickListener(v->{
+        btnSignUp.setOnClickListener(v -> {
+            String username = etUsername.getText().toString();
+            String password = etPassword.getText().toString();
+
             Toast.makeText(this, "sign up", Toast.LENGTH_SHORT).show();
+            Call<AuthRes> call = webServices.signUp(username, password);
+            call.enqueue(new Callback<AuthRes>() {
+                @Override
+                public void onResponse(Call<AuthRes> call, Response<AuthRes> response) {
+                    if (response.isSuccessful()) {
+                        AuthRes token = response.body();
+                        Log.i("alizeynres", "onResponse: " + response.code());
+                        Log.i("alizeynres", "onResponse: " + response.body().getToken());
+                        LoginHelper.signUp(AuthAcitivity.this, username, password, token.getToken());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AuthRes> call, Throwable t) {
+                    Log.i("alizeynres", "onFailure: " + t.getMessage());
+                }
+            });
         });
 
         btnLogin.setOnClickListener(v -> {
+            String username = etUsername.getText().toString();
+            String password = etPassword.getText().toString();
             Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
+            Call<AuthRes> call = webServices.login(username, password);
+            call.enqueue(new Callback<AuthRes>() {
+                @Override
+                public void onResponse(Call<AuthRes> call, Response<AuthRes> response) {
+                    Log.i("alizeynres", "onResponse: " + response.code());
+                    Log.i("alizeynres", "onResponse: " + response.body().getToken());
+                    if (response.isSuccessful()) {
+                        AuthRes authRes = response.body();
+                        LoginHelper.signUp(AuthAcitivity.this, username, password, authRes.getToken());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AuthRes> call, Throwable t) {
+                    Log.i("alizeynres", "onFailure: " + t.getMessage());
+                }
+            });
         });
     }
 }

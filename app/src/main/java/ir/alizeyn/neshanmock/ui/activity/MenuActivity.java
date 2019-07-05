@@ -2,13 +2,11 @@ package ir.alizeyn.neshanmock.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.Menu;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 
-import androidx.appcompat.app.AppCompatActivity;
 import ir.alizeyn.neshanmock.R;
 import ir.alizeyn.neshanmock.util.Tools;
 
@@ -41,6 +39,11 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void listeners() {
+        btnRecordTrack.setOnLongClickListener(view -> {
+            startActivity(new Intent(MenuActivity.this, AuthAcitivity.class));
+            return true;
+        });
+
         btnRecordTrack.setOnClickListener(view -> startActivity(new Intent(MenuActivity.this, TrackActivity.class)));
         btnMockArchive.setOnClickListener(view -> startActivity(new Intent(MenuActivity.this, MockArchiveActivity.class)));
         btnMockImport.setOnClickListener(view -> startActivity(new Intent(MenuActivity.this, ImportActivity.class)));
