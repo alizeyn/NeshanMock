@@ -20,14 +20,14 @@ android {
         }
     }
 
-    splits {
-        abi {
-            enable true
-            reset()
-            include 'armeabi-v7a'
-            universalApk false
-        }
-    }
+//    splits {
+//        abi {
+//            enable true
+//            reset()
+//            include 'armeabi-v7a'
+//            universalApk false
+//        }
+//    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

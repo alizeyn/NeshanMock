@@ -15,12 +15,12 @@
         tools:context=".ui.activity.MenuActivity">
 
 
-        <!--<ImageView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:scaleType="fitStart"-->
-            <!--android:background="@drawable/back"-->
-            <!--android:alpha="0.8"/>-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="@drawable/background"
+            android:alpha="0.8"/>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#37AEA8</color>
+    <color name="colorPrimaryDark">#557C83</color>
+    <color name="colorAccent">#A2D5AC</color>
 
-    <color name="neshanGreen">#6028E8</color>
+    <color name="neshanGreen">@color/colorPrimary</color>
     <color name="neshanGray">#f1f3f5</color>
 
 

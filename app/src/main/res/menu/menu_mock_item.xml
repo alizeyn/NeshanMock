@@ -3,7 +3,7 @@
         <item
             android:id="@+id/save"
             android:icon="@drawable/ic_fiber_manual_record"
-            android:title="Save Offile" />
+            android:title="Save Offline" />
         <item
             android:id="@+id/upload"
             android:icon="@drawable/ic_stop"
