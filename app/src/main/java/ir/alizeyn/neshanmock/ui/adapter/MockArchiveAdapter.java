@@ -36,6 +36,7 @@ import ir.alizeyn.neshanmock.request.MockWebServices;
 import ir.alizeyn.neshanmock.request.RequestFactory;
 import ir.alizeyn.neshanmock.ui.activity.PlayCustomActivity;
 import ir.alizeyn.neshanmock.ui.activity.PlayTrackActivity;
+import ir.alizeyn.neshanmock.util.LoginHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -135,34 +136,38 @@ public class MockArchiveAdapter extends RecyclerView.Adapter<MockArchiveAdapter.
 
                             return true;
                         case R.id.upload:
-                            Toast.makeText(context, "up", Toast.LENGTH_SHORT).show();
 
-                            AsyncTask.execute(() -> {
+                            if (LoginHelper.isUserSignIn(context)) {
 
-                                List<PosEntity> poses = DatabaseClient.getInstance(context)
-                                        .getMockDatabase()
-                                        .getPosDao()
-                                        .getMockPos(mock.getId());
-                                MockShareModel shareModel = new MockShareModel(mock, poses);
+                                AsyncTask.execute(() -> {
 
-                                Call<Void> call = webServices.saveMock(shareModel);
-                                call.enqueue(new Callback<Void>() {
-                                    @Override
-                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                    List<PosEntity> poses = DatabaseClient.getInstance(context)
+                                            .getMockDatabase()
+                                            .getPosDao()
+                                            .getMockPos(mock.getId());
+                                    MockShareModel shareModel = new MockShareModel(mock, poses);
 
-                                        if (response.isSuccessful()) {
-                                            new Handler(Looper.getMainLooper()).post(() -> {
-                                                Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show();
-                                            });
+                                    Call<Void> call = webServices.saveMock(shareModel);
+                                    call.enqueue(new Callback<Void>() {
+                                        @Override
+                                        public void onResponse(Call<Void> call, Response<Void> response) {
+
+                                            if (response.isSuccessful()) {
+                                                new Handler(Looper.getMainLooper()).post(() -> {
+                                                    Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show();
+                                                });
+                                            }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        @Override
+                                        public void onFailure(Call<Void> call, Throwable t) {
 
-                                    }
+                                        }
+                                    });
                                 });
-                            });
+                            } else {
+                                LoginHelper.showLoginRequiredDialog(context);
+                            }
                             return true;
                         case R.id.del:
                             Toast.makeText(context, "del", Toast.LENGTH_SHORT).show();
