@@ -22,23 +22,14 @@ public class PosEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
-
     private long mock_id;
-
     private double lng;
-
     private double lat;
-
     private float speed;
-
     private long time;
-
     private long elapsedRealTime;
-
     private float accuracy;
-
     private float bearing;
-
     private String provider;
 
     public PosEntity(long mock_id, double lng, double lat, float speed, long time, long elapsedRealtime, float accuracy, float bearing, String provider) {

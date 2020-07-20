@@ -1,11 +1,8 @@
 package ir.alizeyn.neshanmock.ui.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,40 +14,33 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.neshan.core.LngLat;
 import org.neshan.core.LngLatVector;
-import org.neshan.geometry.PointGeom;
 import org.neshan.graphics.ARGB;
 import org.neshan.layers.VectorElementLayer;
 import org.neshan.services.NeshanMapStyle;
 import org.neshan.services.NeshanServices;
-import org.neshan.styles.AnimationStyle;
 import org.neshan.styles.AnimationStyleBuilder;
 import org.neshan.styles.AnimationType;
-import org.neshan.styles.BaseMarkerStyleCreator;
 import org.neshan.styles.LineStyleCreator;
-import org.neshan.styles.MarkerStyle;
 import org.neshan.styles.MarkerStyleCreator;
 import org.neshan.ui.MapView;
 import org.neshan.utils.BitmapUtils;
 import org.neshan.vectorelements.Line;
 import org.neshan.vectorelements.Marker;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.zip.Inflater;
 
-import androidx.core.content.ContextCompat;
 import ir.alizeyn.neshanmock.R;
 import ir.alizeyn.neshanmock.database.DatabaseClient;
-import ir.alizeyn.neshanmock.database.MockDao;
-import ir.alizeyn.neshanmock.database.MockDatabase;
 import ir.alizeyn.neshanmock.database.MockEntity;
-import ir.alizeyn.neshanmock.database.PosDao;
 import ir.alizeyn.neshanmock.database.PosEntity;
 import ir.alizeyn.neshanmock.mock.MockType;
 import ir.alizeyn.neshanmock.util.GPSManager;

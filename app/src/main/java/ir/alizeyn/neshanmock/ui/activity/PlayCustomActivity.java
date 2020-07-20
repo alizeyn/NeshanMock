@@ -1,14 +1,5 @@
 package ir.alizeyn.neshanmock.ui.activity;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import ir.alizeyn.neshanmock.R;
-import ir.alizeyn.neshanmock.database.DatabaseClient;
-import ir.alizeyn.neshanmock.database.MockEntity;
-import ir.alizeyn.neshanmock.database.PosEntity;
-import ir.alizeyn.neshanmock.util.Tools;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +18,10 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.vividsolutions.jts.geom.Coordinate;
@@ -49,9 +44,16 @@ import org.neshan.vectorelements.Line;
 import java.util.List;
 import java.util.Locale;
 
+import ir.alizeyn.neshanmock.R;
+import ir.alizeyn.neshanmock.database.DatabaseClient;
+import ir.alizeyn.neshanmock.database.MockEntity;
+import ir.alizeyn.neshanmock.database.PosEntity;
+import ir.alizeyn.neshanmock.util.Tools;
+
 public class PlayCustomActivity extends AppCompatActivity implements LocationListener {
 
-    public static final String MOCK_PROVIDER = "gps";
+    public static final String MOCK_PROVIDER = "alizeyn-mock";
+    private static final String TAG = "alizeyn";
     private MapView map;
     private VectorElementLayer layerMove;
     private VectorElementLayer layerStatic;
@@ -97,7 +99,10 @@ public class PlayCustomActivity extends AppCompatActivity implements LocationLis
         if (extras != null) {
             mock = (MockEntity) extras.getSerializable("mockData");
             if (mock != null) {
+                Log.i(TAG, "onCreate: before async task");
                 AsyncTask.execute(() -> {
+                    Log.i(TAG, "onCreate: Getting mock points from database!");
+                    Log.i(TAG, "onCreate: Thread is : " + Thread.currentThread().getName());
                     mockPoints = DatabaseClient.getInstance(this)
                             .getMockDatabase()
                             .getPosDao()
@@ -113,28 +118,18 @@ public class PlayCustomActivity extends AppCompatActivity implements LocationLis
                     }
 
                     setLine(lineVector, layerStatic, false);
-
+                    focusOnRoute();
                     lengthIndexedLine = new LengthIndexedLine(Tools.convertLineToLineString(lineVector));
-
-
-//                    for (int i = 0; i < 100; i++) {
-//                    Coordinate c1 = lengthIndexedLine.extractPoint(0);
-//                    Coordinate c2 = lengthIndexedLine.extractPoint(0.00006);
-//                    Log.i("alizeyn_distance", "c1 : " + c1.y + ", " + c1.x);
-//                    Log.i("alizeyn_distance", "c2 : " + c2.y + ", " + c2.x);
-//                    Log.i("alizeyn_distance", "diff: " + Tools.distance(new LngLat(c1.y, c1.x), new LngLat(c2.y, c2.x)));
-//                    }
-
                 });
                 locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             }
         }
-
     }
 
 
     @SuppressLint("MissingPermission")
     private void addMockProvider() {
+
         try {
             locationManager.addTestProvider(MOCK_PROVIDER,
                     false,
@@ -255,7 +250,10 @@ public class PlayCustomActivity extends AppCompatActivity implements LocationLis
 
                 try {
                     Log.i("alizeyn_thread", ": runned");
-                    addMockProvider();
+
+                    if (locationManager.getProvider(MOCK_PROVIDER) == null) {
+                        addMockProvider();
+                    }
 
                     Coordinate c1;
                     Coordinate c2;
@@ -379,7 +377,11 @@ public class PlayCustomActivity extends AppCompatActivity implements LocationLis
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (lineVector.size() > 0) {
+        focusOnRoute();
+    }
+
+    private void focusOnRoute() {
+        if (lineVector != null && lineVector.size() > 0) {
             map.moveToCameraBounds(new Bounds(lineVector.get(0), lineVector.get((int) (lineVector.size() - 1))),
                     new ViewportBounds(new ViewportPosition(0, tableDetails.getHeight()), new ViewportPosition(map.getWidth(), map.getHeight())),
                     true,
