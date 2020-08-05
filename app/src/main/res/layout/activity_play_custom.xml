@@ -24,9 +24,10 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tableDetails"
+                android:layout_below="@id/sbSpeed"
                 android:layout_alignParentRight="true"
                 android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
                 android:text="share"
                 app:strokeColor="@color/colorPrimary"
                 app:strokeWidth="2dp" />

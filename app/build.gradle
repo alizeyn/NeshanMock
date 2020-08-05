@@ -6,8 +6,8 @@ android {
         applicationId "ir.alizeyn.neshanmock"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.1"
         multiDexEnabled true
         buildConfigField 'String', 'ROUTING_URL', '"https://api.neshan.org/v2/"'
         buildConfigField 'String', 'MOCK_URL', '"http://192.168.5.178:8000"'
