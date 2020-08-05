@@ -1,8 +1,6 @@
 package ir.alizeyn.neshanmock.ui.activity;
 
 import android.app.Dialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,14 +24,9 @@ import org.neshan.graphics.ARGB;
 import org.neshan.layers.VectorElementLayer;
 import org.neshan.services.NeshanMapStyle;
 import org.neshan.services.NeshanServices;
-import org.neshan.styles.AnimationStyleBuilder;
-import org.neshan.styles.AnimationType;
 import org.neshan.styles.LineStyleCreator;
-import org.neshan.styles.MarkerStyleCreator;
 import org.neshan.ui.MapView;
-import org.neshan.utils.BitmapUtils;
 import org.neshan.vectorelements.Line;
-import org.neshan.vectorelements.Marker;
 
 import java.util.List;
 import java.util.Locale;
@@ -178,23 +171,6 @@ public class TrackActivity extends AppCompatActivity {
         tvAccValue.setText(acc);
         tvProviderValue.setText(loc.getProvider());
         tvTimeValue.setText(DateFormat.format("hh:mm:ss", loc.getTime()));
-    }
-
-    private void setLocationMarker(LngLat loc) {
-        MarkerStyleCreator markerStyleCreator = new MarkerStyleCreator();
-        Bitmap trackingCircle = BitmapFactory.decodeResource(getResources(), R.drawable.circle);
-        if (!tracking) {
-            trackingCircle = BitmapFactory.decodeResource(getResources(), R.drawable.nontrack_circle);
-        }
-        markerStyleCreator.setBitmap(BitmapUtils.createBitmapFromAndroidBitmap(trackingCircle));
-        markerStyleCreator.setSize(16);
-        AnimationStyleBuilder animationStyleBuilder = new AnimationStyleBuilder();
-        animationStyleBuilder.setSizeAnimationType(AnimationType.ANIMATION_TYPE_SPRING);
-
-        markerStyleCreator.setAnimationStyle(animationStyleBuilder.buildStyle());
-
-        Marker marker = new Marker(loc, markerStyleCreator.buildStyle());
-        markerLayer.add(marker);
     }
 
     private void setLine(LngLat p1, LngLat p2, boolean tracking) {

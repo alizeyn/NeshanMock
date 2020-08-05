@@ -1,6 +1,8 @@
 package ir.alizeyn.neshanmock.ui.activity;
 
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -23,9 +25,14 @@ import org.neshan.graphics.ARGB;
 import org.neshan.layers.VectorElementLayer;
 import org.neshan.services.NeshanMapStyle;
 import org.neshan.services.NeshanServices;
+import org.neshan.styles.AnimationStyleBuilder;
+import org.neshan.styles.AnimationType;
 import org.neshan.styles.LineStyleCreator;
+import org.neshan.styles.MarkerStyleCreator;
 import org.neshan.ui.MapView;
+import org.neshan.utils.BitmapUtils;
 import org.neshan.vectorelements.Line;
+import org.neshan.vectorelements.Marker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,6 +104,7 @@ public class CustomMockActivity extends AppCompatActivity {
             origin = map.getFocalPointPosition();
             btnSelectOrigin.setVisibility(View.GONE);
             btnSelectDest.setVisibility(View.VISIBLE);
+            setMarker(new LngLat(origin.getX(), origin.getY()), R.drawable.marker_origin);
         });
 
         btnSelectDest.setOnClickListener(v -> {
@@ -147,6 +155,8 @@ public class CustomMockActivity extends AppCompatActivity {
                 }
             });
             pb.setVisibility(View.VISIBLE);
+
+            setMarker(new LngLat(dest.getX(), dest.getY()), R.drawable.marker_dest);
         });
 
         btnSaveMock.setOnClickListener(v -> {
@@ -216,7 +226,7 @@ public class CustomMockActivity extends AppCompatActivity {
                             SystemClock.elapsedRealtimeNanos(),
                             1,
                             0,
-                            "gps");
+                            PlayCustomActivity.MOCK_PROVIDER);
 
                     DatabaseClient.getInstance(CustomMockActivity.this)
                             .getMockDatabase()
@@ -259,5 +269,19 @@ public class CustomMockActivity extends AppCompatActivity {
 
         dialog.setContentView(saveMockView);
         return dialog;
+    }
+
+    private void setMarker(LngLat loc, int drawableId) {
+        MarkerStyleCreator markerStyleCreator = new MarkerStyleCreator();
+        Bitmap trackingCircle = BitmapFactory.decodeResource(getResources(), drawableId);
+        markerStyleCreator.setBitmap(BitmapUtils.createBitmapFromAndroidBitmap(trackingCircle));
+        markerStyleCreator.setSize(32);
+        AnimationStyleBuilder animationStyleBuilder = new AnimationStyleBuilder();
+        animationStyleBuilder.setSizeAnimationType(AnimationType.ANIMATION_TYPE_SPRING);
+
+        markerStyleCreator.setAnimationStyle(animationStyleBuilder.buildStyle());
+
+        Marker marker = new Marker(loc, markerStyleCreator.buildStyle());
+        layer.add(marker);
     }
 }

@@ -2,11 +2,13 @@ package ir.alizeyn.neshanmock.util;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -21,6 +23,10 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import ir.alizeyn.neshanmock.BuildConfig;
+
+import static ir.alizeyn.neshanmock.util.GPSManager.TAG;
 
 /**
  * @author alizeyn
@@ -144,5 +150,23 @@ public class Tools {
             lineCoordinate[j] = new Coordinate(mapPos.getY(), mapPos.getX());
         }
         return new GeometryFactory().createLineString(lineCoordinate);
+    }
+
+    public static boolean isMockLocationEnabled(Context context) {
+        boolean isEnabled = false;
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                AppOpsManager opsManager = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+                isEnabled = opsManager.checkOp(AppOpsManager.OPSTR_MOCK_LOCATION, android.os.Process.myUid(),
+                        BuildConfig.APPLICATION_ID) == AppOpsManager.MODE_ALLOWED;
+            } else {
+                return !Settings.Secure.getString(context.getContentResolver(),
+                        Settings.Secure.ALLOW_MOCK_LOCATION).equals("0");
+            }
+
+        } catch (Exception e) {
+            Log.d(TAG, "Mock location is not enabled.");
+        }
+        return isEnabled;
     }
 }

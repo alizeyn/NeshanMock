@@ -52,7 +52,7 @@ import ir.alizeyn.neshanmock.util.Tools;
 
 public class PlayCustomActivity extends AppCompatActivity implements LocationListener {
 
-    public static final String MOCK_PROVIDER = "alizeyn-mock";
+    public static final String MOCK_PROVIDER = "gps";
     private static final String TAG = "alizeyn";
     private MapView map;
     private VectorElementLayer layerMove;
@@ -122,33 +122,15 @@ public class PlayCustomActivity extends AppCompatActivity implements LocationLis
                     lengthIndexedLine = new LengthIndexedLine(Tools.convertLineToLineString(lineVector));
                 });
                 locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                enableProvider();
             }
         }
     }
 
-
-    @SuppressLint("MissingPermission")
-    private void addMockProvider() {
-
-        try {
-            locationManager.addTestProvider(MOCK_PROVIDER,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    0,
-                    1);
-        } catch (SecurityException e) {
-            e.printStackTrace();
-            allowForMock();
-        }
-
-        locationManager.setTestProviderEnabled(MOCK_PROVIDER, true);
-        locationManager.requestLocationUpdates(MOCK_PROVIDER, 0, 0, this);
-
+    @Override
+    protected void onDestroy() {
+        removeProvider();
+        super.onDestroy();
     }
 
     private void allowForMock() {
@@ -251,10 +233,6 @@ public class PlayCustomActivity extends AppCompatActivity implements LocationLis
                 try {
                     Log.i("alizeyn_thread", ": runned");
 
-                    if (locationManager.getProvider(MOCK_PROVIDER) == null) {
-                        addMockProvider();
-                    }
-
                     Coordinate c1;
                     Coordinate c2;
                     if (lengthIndexedLine.isValidIndex(index)) {
@@ -290,7 +268,6 @@ public class PlayCustomActivity extends AppCompatActivity implements LocationLis
             };
 
             gpsHandler.post(provideGpsRunnable);
-
         });
 
         btnStopTrack.setOnClickListener(v -> {
@@ -298,11 +275,7 @@ public class PlayCustomActivity extends AppCompatActivity implements LocationLis
             btnPlayTrack.setVisibility(View.VISIBLE);
             sbSpeed.setVisibility(View.GONE);
             ivMockStatus.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gpsDeactivateStatus));
-
-            locationManager.setTestProviderEnabled(MOCK_PROVIDER, false);
-            locationManager.removeUpdates(this);
-            gpsHandler.removeCallbacks(provideGpsRunnable);
-
+            removeProvider();
             layerMove.clear();
             cleanLocationDetails();
         });
@@ -386,6 +359,44 @@ public class PlayCustomActivity extends AppCompatActivity implements LocationLis
                     new ViewportBounds(new ViewportPosition(0, tableDetails.getHeight()), new ViewportPosition(map.getWidth(), map.getHeight())),
                     true,
                     0.5f);
+        }
+    }
+
+    private void enableProvider() {
+
+        try {
+            locationManager.addTestProvider(
+                    MOCK_PROVIDER,
+                    false,
+                    false,
+                    false,
+                    false,
+                    true,
+                    true,
+                    true,
+                    0,
+                    5
+            );
+        } catch (IllegalArgumentException | SecurityException e) {
+            Log.w(TAG, "addTestProvider" + e.getMessage());
+        }
+        try {
+            locationManager.setTestProviderEnabled(MOCK_PROVIDER, true);
+            locationManager.requestLocationUpdates(MOCK_PROVIDER, 0, 0, this);
+        } catch (IllegalArgumentException | SecurityException e) {
+            Log.w(TAG, "setTestProviderEnabled" + e.getMessage());
+        }
+    }
+
+    private void removeProvider() {
+        try {
+            gpsHandler.removeCallbacks(provideGpsRunnable);
+            locationManager.setTestProviderEnabled(MOCK_PROVIDER, false);
+            locationManager.removeTestProvider(MOCK_PROVIDER);
+            locationManager.setTestProviderEnabled(MOCK_PROVIDER, false);
+            locationManager.removeUpdates(this);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
     }
 }

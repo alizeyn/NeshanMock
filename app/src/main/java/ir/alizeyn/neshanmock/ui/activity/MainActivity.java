@@ -1,14 +1,14 @@
 package ir.alizeyn.neshanmock.ui.activity;
 
-import android.location.Location;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.neshan.core.LngLat;
 import org.neshan.services.NeshanMapStyle;
 import org.neshan.services.NeshanServices;
 import org.neshan.ui.MapView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import ir.alizeyn.neshanmock.R;
 import ir.alizeyn.neshanmock.util.GPSManager;
 import ir.alizeyn.neshanmock.util.Tools;
